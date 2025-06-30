@@ -42,15 +42,17 @@ jobs:
         path: eva4/target/site/surefire-report.html
 
     - name: SonarQube Scan
+      if: ${{ env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
       uses: SonarSource/sonarcloud-github-action@v2
       with:
         projectBaseDir: eva4
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      continue-on-error: true
 
     - name: Notify on failure
-      if: failure()
+      if: failure() && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.ALERT_EMAIL != '' && env.ALERT_FROM != ''
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
@@ -59,7 +61,8 @@ jobs:
         password: ${{ secrets.SMTP_PASSWORD }}
         subject: "[CI] Fallo en pruebas Maven"
         to: ${{ secrets.ALERT_EMAIL }}
-        from: ${{ secrets.ALERT_EMAIL }}
+        from: ${{ secrets.ALERT_FROM }}
         body: |
           Las pruebas Maven han fallado en el repositorio ${{ github.repository }}.
           Revisa el reporte adjunto en la ejecución de GitHub Actions.
+      continue-on-error: true
