@@ -1,0 +1,39 @@
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# JMeter results and reports
+resultados/
+jmeter-pruebas/resultados/
+*.jtl
+*.jmx~
+
+# IDEs and editors
+/.idea/
+*.iml
+*.ipr
+*.iws
+*.vscode/
+.DS_Store
+Thumbs.db
+
+# OS files
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Java
+*.class
+
+# Node/npm (if any JS frontend)
+node_modules/
+
+# Python (if any)
+__pycache__/
+*.pyc
+
+# Misc
+*.bak
+*.tmp
